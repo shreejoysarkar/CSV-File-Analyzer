@@ -1,4 +1,7 @@
 pandas
 matplotlib
+ipywidgets
 numpy
+streamlit
+seaborn
 #-e .
