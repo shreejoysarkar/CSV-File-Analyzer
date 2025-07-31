@@ -3,5 +3,7 @@ matplotlib
 ipywidgets
 numpy
 streamlit
+kagglehub
 seaborn
+scikit-learn
 #-e .
