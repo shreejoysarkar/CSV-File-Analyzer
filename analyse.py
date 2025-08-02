@@ -15,11 +15,9 @@ st.title(" CSV Quick Insights App")
 
 # Section: File Upload
 st.header(" Upload CSV File")
-uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+data = st.file_uploader("Choose a CSV file", type="csv")
 
-@st.cache_data
-def electronic_details_load():
-    return pd.read_csv('sample_datasets\electronic_product_detials.csv')
+
 
 @st.cache_data
 def kid_screentime_load():
@@ -34,8 +32,7 @@ if 'selected_dataset' not in st.session_state:
     st.session_state.selected_dataset = None
     st.session_state.data = None
 
-if 'electronic_detail' not in st.session_state:
-    st.session_state.electronic_detail = False
+
 
 if 'kid_screentime' not in st.session_state:
     st.session_state.kid_screentime = False
@@ -44,7 +41,6 @@ if 'media_engagements' not in st.session_state:
     st.session_state.media_engagement = False
 
 def reset_other_checkboxes(selected):
-    st.session_state.electronic_detail_checkbox = selected == 'eletronic'
     st.session_state.kid_screentime_checkbox = selected == 'screentime'
     st.session_state.media_engagement_checkbox = selected == 'engagement'
 
@@ -54,23 +50,15 @@ st.subheader("Sample Datasets: ")
 # Streamlit layout with three columns
 cole1, cole2, cole3 = st.columns(3)
 
-#loading electronic product details dataset
-with cole1:
-    if st.checkbox("Use electronic-product-details Dataset", key='electronic_detail', on_change=reset_other_checkboxes, args=('electronic',)):
-        if st.session_state.elecctronic_detail_checkbox:
-            st.session_state.selected_dataset = 'electronic'
-            st.session_state.data = electronic_details_load()
-            st.session_state.data.to_csv('sample_datasets\social_media_engagements.csv', index=False)
-            data='sample_datasets\social_media_engagements.csv'
 
 # loading indian kids screentime dataset
-with cole2:
+with cole1:
     if st.checkbox("Use kid-screentime Dataset", key='kid_screentime_checkbox', on_change=reset_other_checkboxes, args=('screentime',)):
         if st.session_state.kid_screentime_checkbox:
             st.session_state.selected_dataset = 'screentime'
             st.session_state.data = kid_screentime_load()
-            st.session_state.data.to_csv('sample_datasets/indian-kid-screentime.csv', index=False)
-            data='sample_datasets/indian-kid-screentime.csv'
+            st.session_state.data.to_csv('indian-kid-screentime.csv', index=False)
+            data='indian-kid-screentime.csv'
 
 # loading social media engagements dataset
 with cole3:
@@ -78,8 +66,8 @@ with cole3:
         if st.session_state.media_engagement_checkbox:
             st.session_state.selected_dataset = 'engagement'
             st.session_state.data = media_engagements_load()
-            st.session_state.data.to_csv('sample_datasets/social_media_engagement.csv', index=False)
-            data='sample_datasets/social_media_engagement.csv'
+            st.session_state.data.to_csv('social_media_engagement.csv', index=False)
+            data='social_media_engagement.csv'
 
 col1, col2, = st.columns(2)
 
@@ -125,17 +113,48 @@ if data is not None:
         st.markdown('---')
     
     with col2:
-        col2.subheader("Coorelation Plot")
-        st.success("")
-        # Apply LabelEncoder to string columns
-        df_encoded = df.copy()
-        le = LabelEncoder()
-        for col in df.select_dtypes(include=['object']).columns:
-            df_encoded[col] = le.fit_transform(df_encoded[col])
-        # Plot correlation matrix using seaborn
-        fig, ax = plt.subplots(figsize=(10, 8))
-        sns.heatmap(df_encoded.corr(), annot=True, cmap='coolwarm', linewidths=0.5, ax=ax)
-        st.pyplot(fig)
+        col2.subheader("Bar Plot")
+        st.success("NOTE: Useful for visualizing categorical vs numerical relationships.")
+
+        categorical_columns = df.select_dtypes(include=['object']).columns.tolist()
+        numerical_columns = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
+
+        if categorical_columns and numerical_columns:
+            bar_x = st.selectbox("Select Categorical Column (X-axis)", categorical_columns, key='bar_x')
+            bar_y = st.selectbox("Select Numerical Column (Y-axis)", numerical_columns, key='bar_y')
+
+            if bar_x and bar_y:
+                bar_data = df.groupby(bar_x)[bar_y].mean().sort_values(ascending=False).reset_index()
+                fig, ax = plt.subplots(figsize=(10, 6))
+                sns.barplot(data=bar_data, x=bar_x, y=bar_y, ax=ax, palette="viridis")
+                ax.set_title(f"Bar Plot: Average {bar_y} by {bar_x}")
+                ax.set_xlabel(bar_x)
+                ax.set_ylabel(f"Average {bar_y}")
+                plt.xticks(rotation=45)
+                st.pyplot(fig)
+        else:
+            st.warning("Need at least one categorical and one numerical column for bar plot.")
+        st.markdown('---')
+
+
+    with col2:
+        col2.subheader("Line Plot")
+        st.success("NOTE: Only numerical columns can be plotted.")
+
+        numerical_columns = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
+        if len(numerical_columns) < 1:
+            st.warning("No numerical columns available to plot.")
+        else:
+            x_axis = st.selectbox("Select X-axis", numerical_columns, key='line_x')
+            y_axis = st.selectbox("Select Y-axis", numerical_columns, key='line_y')
+
+            if x_axis and y_axis:
+                fig, ax = plt.subplots(figsize=(10, 5))
+                sns.lineplot(data=df, x=x_axis, y=y_axis, ax=ax)
+                ax.set_title(f"Line Plot: {y_axis} vs {x_axis}")
+                ax.set_xlabel(x_axis)
+                ax.set_ylabel(y_axis)
+                st.pyplot(fig)
         st.markdown('---')
         
     with col2:
