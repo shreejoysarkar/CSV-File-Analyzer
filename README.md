@@ -12,3 +12,7 @@ Manually inspecting raw CSV files is often tedious and error-prone. This project
 - Exporting a cleaned version of the file for further analysis
 
 ---
+
+## Click here to check the application : 
+https://csv-file-analyzer.streamlit.app/
+
