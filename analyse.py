@@ -74,7 +74,6 @@ col1, col2 = st.columns(2)
 
 if st.session_state.data is not None:
     df = st.session_state.data.copy()
-    df.dropna(how='any', inplace=True)
     df.drop_duplicates(keep='first', inplace=True)
 
     with col2:
@@ -91,6 +90,27 @@ if st.session_state.data is not None:
         st.write('Data Types:', df.dtypes)
         st.write('Missing Values:', df.isnull().sum())
         st.markdown('---')
+
+    # ---------- Remove Nulls & Download Section ----------
+    st.markdown("<hr style='border: 1px dashed gray;'>", unsafe_allow_html=True)
+    st.subheader("🧹 Clean Null Values & Download")
+
+    if df.isnull().sum().sum() > 0:
+        st.info("This dataset contains missing values.")
+        if st.button("Remove Null Values and Prepare Download"):
+            cleaned_df = df.dropna()
+            st.success("All null values removed. You can now download the cleaned CSV file below.")
+
+            csv_cleaned = cleaned_df.to_csv(index=False).encode('utf-8')
+
+            st.download_button(
+                label="📥 Download Cleaned CSV",
+                data=csv_cleaned,
+                file_name='cleaned_dataset.csv',
+                mime='text/csv'
+            )
+    else:
+        st.success("✅ This dataset has no missing values.")
 
     with col2:
         col2.subheader("Descriptive Statistics")
