@@ -18,17 +18,16 @@ https://csv-file-analyzer.streamlit.app/
 
 ##  Features
 * Upload Your Own CSV File
-Easily upload any .csv file and get instant data analysis results.
+* Easily upload any .csv file and get instant data analysis results.
 
-Choose from Sample Datasets
-Includes two built-in datasets:
+* Choose from Sample Datasets
+         Includes two built-in datasets:
 
-Indian Kids Screentime (2025)
+1.            Indian Kids Screentime (2025)
 
-Social Media Engagement Metrics
+2.             Social Media Engagement Metrics
 
-Data Cleaning
-Automatically drops missing and duplicate rows for clean visualization.
+* Data Cleaning : Automatically drops missing and duplicate rows for clean visualization.
 
 Data Overview
 
