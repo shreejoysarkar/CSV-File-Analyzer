@@ -16,6 +16,20 @@ Manually inspecting raw CSV files is often tedious and error-prone. This project
 ## Click here to check the application : 
 https://csv-file-analyzer.streamlit.app/
 
+## 📁 Key Files and Folders
+
+- **`.streamlit/`**  
+  Contains configuration file for theme of Streamlit app UI.
+
+- **`sample_datasets/`**  
+  Stores built-in CSV files used for demo purposes in the app. These datasets can be loaded without uploading any files, helping users explore features instantly.
+
+- **`analyse.py`**  
+  The main Python script that runs the Streamlit application. It handles CSV file uploads, displays basic data insights, and generates visualizations like bar plots, line plots, and pie charts.
+
+- **`trails.ipynb`**  
+  A Jupyter notebook used for testing and developing specific features before final deployment. ***This notebook contains all the data analysis and visualization code***
+
 ## 🚀 Features
 
 ### ✅ Upload Your Own CSV File
