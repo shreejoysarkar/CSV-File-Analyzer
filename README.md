@@ -16,38 +16,39 @@ Manually inspecting raw CSV files is often tedious and error-prone. This project
 ## Click here to check the application : 
 https://csv-file-analyzer.streamlit.app/
 
-##  Features
-* Upload Your Own CSV File
-* Easily upload any .csv file and get instant data analysis results.
+## 🚀 Features
 
-* Choose from Sample Datasets
-         Includes two built-in datasets:
+### ✅ Upload Your Own CSV File
+Easily upload any `.csv` file and get instant data analysis results.
 
-1.            Indian Kids Screentime (2025)
+### ✅ Choose from Sample Datasets
+Includes two built-in datasets:
+- _Indian Kids Screentime (2025)_
+- _Social Media Engagement Metrics_
 
-2.             Social Media Engagement Metrics
+### 🧹 Data Cleaning
+- Automatically drops missing and duplicate rows to ensure clean visualizations.
 
-* Data Cleaning : Automatically drops missing and duplicate rows for clean visualization.
+### 📋 Data Overview
+- Dataset shape and column info
+- Data types
+- Null value summary
 
-Data Overview
+### 📊 Descriptive Statistics
+- Summary statistics for all columns
 
-Dataset shape and column information
+### 📌 Value Counts
+- Frequency counts for selected columns
 
-Data types and null value summary
+### 📈 Visualizations
 
-Descriptive Statistics
+- **Bar Plot**  
+  Visualize the mean of a numerical column grouped by a categorical column.
 
-Summary statistics for all columns
+- **Line Plot**  
+  Plot relationships between any two numerical features.
 
-Value Counts
+- **Pie Chart**  
+  View category distributions with smaller slices grouped into “Others” to avoid clutter.
 
-Frequency counts of values for selected columns
-
-Visualizations
-
-Bar Plot: Mean of numerical column grouped by a categorical column
-
-Line Plot: Plot relationship between two numerical features
-
-Pie Chart: Distribution of values in a selected column with small slices grouped as "Others"
-
+---
